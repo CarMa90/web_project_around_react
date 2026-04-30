@@ -3,7 +3,7 @@ import { useState, useContext } from "react";
 import { CurrentUserContext } from "../../../../../contexts/CurrentUserContext";
 
 export default function EditProfile() {
-  const userContext = React.useContext(CurrentUserContext);
+  const userContext = useContext(CurrentUserContext);
   const { currentUser, handleUpdateUser } = userContext;
 
   const [name, setName] = useState(currentUser.name);

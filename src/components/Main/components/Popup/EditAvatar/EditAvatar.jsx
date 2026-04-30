@@ -3,7 +3,7 @@ import { useContext } from "react";
 import { CurrentUserContext } from "../../../../../contexts/CurrentUserContext";
 
 export default function EditAvatar() {
-  const userContext = React.useContext(CurrentUserContext);
+  const userContext = useContext(CurrentUserContext);
   const { handleUpdateAvatar } = userContext;
 
   const urlRef = React.useRef();

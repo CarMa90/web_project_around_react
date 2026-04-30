@@ -15,11 +15,11 @@ class Api {
     });
   }
 
-  getNewCard(options) {
+  getNewCard(data) {
     return fetch(`${this.url}cards/`, {
       headers: this.headers,
-      body: options.body,
-      method: options.method,
+      body: JSON.stringify({ name: data.name, link: data.link }),
+      method: "POST",
     }).then((res) => {
       if (res.ok) {
         return res.json();

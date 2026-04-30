@@ -9,7 +9,14 @@ import ImagePopup from "./components/Popup/ImagePopup/ImagePopup";
 import { api } from "../../utils/api";
 import { CurrentUserContext } from "../../contexts/CurrentUserContext";
 
-export default function Main({ popup, onOpenPopup, onClosePopup }) {
+export default function Main({
+  popup,
+  onOpenPopup,
+  onClosePopup,
+  cards,
+  onCardLike,
+  onCardDelete,
+}) {
   const { currentUser } = React.useContext(CurrentUserContext);
 
   const newCardPopup = { title: "Nuevo lugar", children: <NewCard /> };
@@ -21,38 +28,6 @@ export default function Main({ popup, onOpenPopup, onClosePopup }) {
     title: "Cambiar foto de perfil",
     children: <EditAvatar />,
   };
-
-  const [cards, setCards] = useState([]);
-
-  useEffect(() => {
-    (async () => {
-      await api.getInitialCards().then((data) => {
-        // console.log(data);
-        setCards(data);
-      });
-    })();
-  }, []);
-
-  async function handleCardlikes(card) {
-    await api.handleCardLikes(card).then((newCard) => {
-      // console.log(newCard);
-      setCards((state) => {
-        // console.log(state);
-        return state.map((currentCard) =>
-          currentCard._id === card._id ? newCard : currentCard,
-        );
-      });
-    });
-  }
-
-  async function handleCardDelete(card) {
-    await api.deleteCard(card).then(() => {
-      // console.log(deletedCard);
-      setCards((state) => {
-        return state.filter((currentCard) => currentCard._id !== card._id);
-      });
-    });
-  }
 
   return (
     <main className="content">
@@ -98,8 +73,8 @@ export default function Main({ popup, onOpenPopup, onClosePopup }) {
               key={item._id}
               card={item}
               handleOpenPopup={onOpenPopup}
-              onCardLike={handleCardlikes}
-              onCardDelete={handleCardDelete}
+              onCardLike={onCardLike}
+              onCardDelete={onCardDelete}
             />
           ))}
         </ul>
