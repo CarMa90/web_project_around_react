@@ -1,14 +1,13 @@
 import ImagePopup from "../Popup/ImagePopup/ImagePopup";
+import RemoveCard from "../Popup/RemoveCard/RemoveCard";
 
-export default function Card({
-  card,
-  handleOpenPopup,
-  onCardLike,
-  onCardDelete,
-}) {
-  const { name, link, isLiked } = card;
+export default function Card({ card, handleOpenPopup, onCardLike }) {
+  const { name, link, isLiked, _id } = card;
 
   const imageComponent = { children: <ImagePopup card={card} /> };
+  const confirmationPopup = (id) => {
+    return { title: "¿Estás seguro/a?", children: <RemoveCard id={id} /> };
+  };
 
   return (
     <li className="card">
@@ -23,7 +22,7 @@ export default function Card({
         className="card__delete-button"
         type="button"
         onClick={() => {
-          onCardDelete(card);
+          handleOpenPopup(confirmationPopup(_id));
         }}
       />
       <div className="card__description">

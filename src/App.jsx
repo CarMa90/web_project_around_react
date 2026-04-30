@@ -30,12 +30,13 @@ function App() {
     });
   }
 
-  async function handleCardDelete(card) {
-    await api.deleteCard(card).then(() => {
+  async function handleCardDelete(id) {
+    await api.deleteCard(id).then(() => {
       // console.log(deletedCard);
       setCards((state) => {
-        return state.filter((currentCard) => currentCard._id !== card._id);
+        return state.filter((currentCard) => currentCard._id !== id);
       });
+      handleClosePopup();
     });
   }
 
@@ -90,7 +91,9 @@ function App() {
 
   return (
     <>
-      <SubmitCardContext.Provider value={{ handleAddPlaceSubmit }}>
+      <SubmitCardContext.Provider
+        value={{ handleAddPlaceSubmit, handleCardDelete }}
+      >
         <CurrentUserContext.Provider
           value={{ currentUser, handleUpdateUser, handleUpdateAvatar }}
         >
