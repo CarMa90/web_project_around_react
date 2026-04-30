@@ -1,6 +1,11 @@
 import ImagePopup from "../Popup/ImagePopup/ImagePopup";
 
-export default function Card({ card, handleOpenPopup }) {
+export default function Card({
+  card,
+  handleOpenPopup,
+  onCardLike,
+  onCardDelete,
+}) {
   const { name, link, isLiked } = card;
 
   const imageComponent = { children: <ImagePopup card={card} /> };
@@ -17,6 +22,9 @@ export default function Card({ card, handleOpenPopup }) {
         aria-label="Delete card"
         className="card__delete-button"
         type="button"
+        onClick={() => {
+          onCardDelete(card);
+        }}
       />
       <div className="card__description">
         <h2 className="card__title">{name}</h2>
@@ -28,6 +36,9 @@ export default function Card({ card, handleOpenPopup }) {
               ? "card__like-button card__like-button_is-active"
               : "card__like-button"
           }
+          onClick={() => {
+            onCardLike(card);
+          }}
         />
       </div>
     </li>

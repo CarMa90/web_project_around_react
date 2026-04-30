@@ -1,0 +1,122 @@
+class Api {
+  constructor(options) {
+    this.url = options.url;
+    this.headers = options.headers;
+  }
+
+  getInitialCards() {
+    // console.log(this.headers);
+    return fetch(`${this.url}cards/`, { headers: this.headers }).then((res) => {
+      if (res.ok) {
+        return res.json();
+      }
+
+      return Promise.reject(`Error: ${res.status}`);
+    });
+  }
+
+  getNewCard(options) {
+    return fetch(`${this.url}cards/`, {
+      headers: this.headers,
+      body: options.body,
+      method: options.method,
+    }).then((res) => {
+      if (res.ok) {
+        return res.json();
+      }
+
+      return Promise.reject(`Error: ${res.status}`);
+    });
+  }
+
+  handleCardLikes(card) {
+    // console.log(card);
+    if (card.isLiked) {
+      return fetch(
+        `https://around-api.es.tripleten-services.com/v1/cards/${card._id}/likes`,
+        {
+          method: "DELETE",
+          headers: this.headers,
+        },
+      ).then((res) => {
+        if (res.ok) {
+          return res.json();
+        }
+
+        return Promise.reject(`Error: ${res.status}`);
+      });
+    } else if (!card.isLiked) {
+      return fetch(
+        `https://around-api.es.tripleten-services.com/v1/cards/${card._id}/likes`,
+        {
+          method: "PUT",
+          headers: this.headers,
+        },
+      ).then((res) => {
+        if (res.ok) {
+          return res.json();
+        }
+
+        return Promise.reject(`Error: ${res.status}`);
+      });
+    }
+  }
+
+  deleteCard(card) {
+    return fetch(`${this.url}cards/${card._id}`, {
+      headers: this.headers,
+      method: "DELETE",
+    }).then((res) => {
+      if (res.ok) {
+        return res.json();
+      }
+
+      return Promise.reject(`Error: ${res.status}`);
+    });
+  }
+
+  getUserInfo() {
+    return fetch(`${this.url}users/me`, { headers: this.headers }).then(
+      (res) => {
+        if (res.ok) {
+          return res.json();
+        }
+        return Promise.reject(`Error: ${res.status}`);
+      },
+    );
+  }
+
+  setUserInfo(data) {
+    return fetch(`${this.url}users/me`, {
+      headers: this.headers,
+      method: "PATCH",
+      body: JSON.stringify(data),
+    }).then((res) => {
+      if (res.ok) {
+        return res.json();
+      }
+      return Promise.reject(`Error: ${res.status}`);
+    });
+  }
+
+  changeProfilePicture(data) {
+    return fetch(`${this.url}users/me/avatar`, {
+      headers: this.headers,
+      method: "PATCH",
+      body: JSON.stringify(data),
+    }).then((res) => {
+      if (res.ok) {
+        return res.json();
+      }
+      return Promise.reject(`Error: ${res.status}`);
+    });
+  }
+}
+
+export const api = new Api({
+  url: "https://around-api.es.tripleten-services.com/v1/",
+  headers: {
+    authorization: "288e77e1-cc55-482e-83a6-7664a6a338f5",
+    "content-type": "application/json",
+  },
+});
