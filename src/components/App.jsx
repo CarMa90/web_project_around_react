@@ -1,10 +1,10 @@
-import Header from "./components/Header/Header";
-import Main from "./components/Main/Main";
-import Footer from "./components/Footer/Footer";
+import Header from "./Header/Header";
+import Main from "./Main/Main";
+import Footer from "./Footer/Footer";
 import { useState, useEffect } from "react";
-import { api } from "./utils/api";
-import { CurrentUserContext } from "./contexts/CurrentUserContext";
-import { SubmitCardContext } from "./contexts/SubmitCardContext";
+import { api } from "../utils/api";
+import { CurrentUserContext } from "../contexts/CurrentUserContext";
+import { SubmitCardContext } from "../contexts/SubmitCardContext";
 
 function App() {
   const [cards, setCards] = useState([]);
