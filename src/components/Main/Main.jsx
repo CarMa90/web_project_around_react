@@ -7,6 +7,7 @@ import RemoveCard from "./components/Popup/RemoveCard/RemoveCard";
 import Card from "./components/Card/Card";
 import ImagePopup from "./components/Popup/ImagePopup/ImagePopup";
 import { CurrentUserContext } from "../../contexts/CurrentUserContext";
+import editIcon from "../../assets/edit-icon.svg";
 
 export default function Main({
   popup,
@@ -41,7 +42,7 @@ export default function Main({
             alt={currentUser.name}
           />
           <div className="profile__image-overlay">
-            <img src="../../assets/edit-icon.svg" alt="Edit Icon" />
+            <img src={editIcon} alt="Edit Icon" />
           </div>
         </div>
         <div className="profile__info">
